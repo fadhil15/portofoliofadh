@@ -30,12 +30,13 @@ router.get("/projects", async (req, res) => {
 });
 
 // GET /api/projects/:id - Fetch single project with markdown
-router.get("/projects/:id", async (req, res) => {
+router.get("/projects/:id", async (req, res): Promise<void> => {
     try {
         const id = parseInt(req.params.id);
 
         if (isNaN(id)) {
-            return res.status(400).json({ message: "Invalid project ID" });
+            res.status(400).json({ message: "Invalid project ID" });
+            return;
         }
 
         const project = await db
@@ -45,13 +46,15 @@ router.get("/projects/:id", async (req, res) => {
             .limit(1);
 
         if (project.length === 0) {
-            return res.status(404).json({ message: "Project not found" });
+            res.status(404).json({ message: "Project not found" });
+            return;
         }
 
         res.json(project[0]);
     } catch (error) {
         console.error("Error fetching project:", error);
         res.status(500).json({ message: "Failed to fetch project" });
+        return;
     }
 });
 
@@ -65,7 +68,7 @@ const CreateProjectSchema = z.object({
     external_link: z.string().url().optional(),
 });
 
-router.post("/projects", async (req, res) => {
+router.post("/projects", async (req, res): Promise<void> => {
     try {
         const validatedData = CreateProjectSchema.parse(req.body);
 
@@ -77,14 +80,16 @@ router.post("/projects", async (req, res) => {
         res.status(201).json(newProject);
     } catch (error: any) {
         if (error instanceof z.ZodError) {
-            return res.status(400).json({
+            res.status(400).json({
                 message: "Validation error",
                 errors: error.errors,
             });
+            return;
         }
 
         console.error("Error creating project:", error);
         res.status(500).json({ message: "Failed to create project" });
+        return;
     }
 });
 

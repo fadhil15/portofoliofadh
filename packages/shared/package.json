@@ -4,6 +4,7 @@
     "main": "./index.ts",
     "types": "./index.ts",
     "scripts": {
+        "build": "echo 'No build required for shared package'",
         "lint": "eslint ."
     },
     "devDependencies": {
