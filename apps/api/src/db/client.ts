@@ -1,5 +1,9 @@
+import { config } from "dotenv";
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
+
+// Ensure environment variables are loaded
+config({ path: ".env.local" });
 
 const dbUrl = process.env.TURSO_DATABASE_URL;
 const authToken = process.env.TURSO_AUTH_TOKEN;
