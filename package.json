@@ -1,0 +1,22 @@
+{
+  "name": "fadhil-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces"
+  },
+  "keywords": [],
+  "author": "Fadhil Muhammad Rayhan",
+  "license": "ISC",
+  "dependencies": {
+    "@libsql/client": "^0.15.15",
+    "drizzle-kit": "^0.31.8",
+    "drizzle-orm": "^0.45.1"
+  }
+}
